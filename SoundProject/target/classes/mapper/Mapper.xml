@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sound.mapper.Mapper">
+	
+	
+
+
+
+	
+ 	<insert id="insertMember" > 
+ 	INSERT INTO MEMBER (EMAIL, NAME, PASSWORD)
+ 	VALUES (#{userEmail},#{userName},#{userPassword})
+ 	</insert>
+ 	
+ 	<select id="signInCheck" resultType="String">
+ 	SELECT * FROM MEMBER WHERE email = #{userEmail}
+ 	</select>
+ 	
+	<select id="search" resultType="String">
+	SELECT * FROM MP3 WHERE title = #{title}
+	</select>
+	
+	<select id="listAll" resultType="com.sound.web.Mp3VO">
+	<![CDATA[
+		select * from MP3 where bno > 0 order by bno desc
+	]]>
+	</select>
+	
+	<select id="list" resultType="com.sound.web.Mp3VO">
+	<![CDATA[
+		SELECT * FROM MP3 WHERE title LIKE '%' ||  #{title} || '%'
+		
+	]]>
+	</select>
+	
+	<select id="url" resultType="String">
+	SELECT * FROM MP3 WHERE path = #{path}
+	</select>
+	
+	
+	<!-- 로그인체크 -->
+	<select id="loginCheck" resultType="String">
+	SELECT NAME AS userName FROM MEMBER
+	WHERE email = #{userEmail} AND password = #{userPassword}
+	</select>
+	
+	<select id="viewMember" resultType="com.sound.web.MemberVO">
+	SELECT 
+		NAME AS userName,
+		EMAIL AS userEmail
+	FROM MEMBER
+	WHERE email = #{userEmail} AND password = #{userPassword}
+	</select>
+</mapper>
